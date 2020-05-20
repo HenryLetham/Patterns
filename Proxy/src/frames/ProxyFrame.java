@@ -6,28 +6,27 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProxyFrame implements Frame {
-    private BaseFrame content;
-    private String filename;
-    private Image Cashe[];
-    private int cntFrames = -1;
-    private static String cachePath;
+    private Frame content;
+    private static int cntFrames = -1;
 
-    public ProxyFrame(String cachePath) {
-        content = new BaseFrame(cachePath);
-        this.cachePath = cachePath;
+
+    public ProxyFrame(Frame frame) {
+        content = frame;
     }
 
     public int getCntFrames() {
         if(cntFrames != -1)
             return cntFrames;
         else {
-            return content.getCntFrames();
+            cntFrames = content.getCntFrames();
+            return cntFrames;
         }
     }
 
     public static void clearCache() {
-        for (File myFile : new File(cachePath).listFiles())
+        for (File myFile : new File("src\\cache").listFiles())
             if (myFile.isFile()) myFile.delete();
+        cntFrames = -1;
     }
 
     public Image loadFrame(int numFrame) throws IOException {

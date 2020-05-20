@@ -1,5 +1,6 @@
 package sample;
 
+import frames.BaseFrame;
 import frames.CinemaManage;
 import frames.ProxyFrame;
 import javafx.fxml.FXML;
@@ -20,19 +21,19 @@ public class Controller {
 
     @FXML
     public void clearCache(javafx.event.ActionEvent actionEvent) {
-        for (File myFile : new File("src\\cache").listFiles())
-            if (myFile.isFile()) myFile.delete();
+       ProxyFrame.clearCache();
     }
 
     @FXML
     public void replay(javafx.event.ActionEvent actionEvent) throws IOException, InterruptedException {
+
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-        ProxyFrame proxy = new ProxyFrame("src\\cache");
+        ProxyFrame proxy = new ProxyFrame(new BaseFrame());
         CinemaManage cinema = new CinemaManage(proxy);
 
         cinema.drawCinema(root);
+
+//        return root;
     }
-
-
 }
